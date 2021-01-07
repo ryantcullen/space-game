@@ -17,10 +17,10 @@ public class LostTarget : FsmCondition {
 	
 		if (Ship.target != huntScript.targetPlaceholder) 
 		{
-            if(Ship.target == null)
-            {
-                return false;
-            }
+			if(Ship.target == null)
+			{
+				return false;
+			}
 			else
 			{
 				return true;
