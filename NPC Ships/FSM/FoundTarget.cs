@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// return true when target is not equal to null
 public class FoundTarget : FsmCondition {
 
 	private ShipAI ship;
@@ -10,14 +12,14 @@ public class FoundTarget : FsmCondition {
 	void Start()
 	{
 		ship = GetComponent<ShipAI> ();
-        findScript = GetComponent<FindTarget>();
+        	findScript = GetComponent<FindTarget>();
 	}
 
 	public override bool IsSatisfied (FsmState curr, FsmState next) {
 	
 		if (ship.target != null && findScript.searchTime > 0.7f) 
 		{
-            return true;
+            		return true;
 		}
 		else
 		{
