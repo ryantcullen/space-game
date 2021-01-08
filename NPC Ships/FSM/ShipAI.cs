@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipAI : Ship {
+	[Header("Rotation")]
 	public float rotationSpeed;
 	public float rotationDamp;
 	[Header("Detection")]
@@ -20,6 +21,7 @@ public class ShipAI : Ship {
 	[HideInInspector]
 	public List<GameObject> enemiesInRange;
 	private Transform parentT;
+	// timer to set a min time in between hits
 	private float timer;
 	private int healthPlaceholder;
 	private Vector3 lookVector;
@@ -35,6 +37,7 @@ public class ShipAI : Ship {
 
 	void Update()
 	{
+		// handle movement
 		Thrust();
 		timer += Time.deltaTime;
 
@@ -62,26 +65,26 @@ public class ShipAI : Ship {
 
 	public IEnumerator FindEnemiesInRange() 
 	{
-    	for(;;) 
-    	{
-        	EnemiesInRange(detectionRange);
-        	yield return new WaitForSeconds(1f);
-    	}
+		for(;;) 
+		{
+			EnemiesInRange(detectionRange);
+			yield return new WaitForSeconds(1f);
+		}
 	}
 
 	public IEnumerator AcquireTarget() 
 	{
-    	for(;;) 
-    	{
-        	FindTargetInSight(detAngleMin);
-        	yield return new WaitForSeconds(0.2f);
-    	}
+		for(;;) 
+		{
+			FindTargetInSight(detAngleMin);
+			yield return new WaitForSeconds(0.2f);
+		}
 	}
 
 
 	public void Thrust()
 	{
-        parentT.Translate(transform.forward * Time.deltaTime * thrust);
+        	parentT.Translate(transform.forward * Time.deltaTime * thrust);
 	}
 
 	public void Roll(int n)
@@ -106,34 +109,34 @@ public class ShipAI : Ship {
 	}
 
 	public void FindTargetInSight(float detAngle)
-    {
-        float dotAngle = -1f;
+    	{
+        	float dotAngle = -1f;
 		Vector3 targetVector = Vector3.zero;
 		float currDot = 0f;
 
-        if(enemiesInRange.Count==0)
-        {
-            target = null;
-        }
+		if(enemiesInRange.Count==0)
+		{
+		    target = null;
+		}
 
-        foreach(GameObject go in enemiesInRange)
-        {
+		foreach(GameObject go in enemiesInRange)
+		{
 			if(go == null)
 			{
 				continue;
 			}
 
-            targetVector = Vector3.Normalize(go.transform.position - transform.position);
-            currDot = Vector3.Dot(transform.forward, targetVector);
+			targetVector = Vector3.Normalize(go.transform.position - transform.position);
+			currDot = Vector3.Dot(transform.forward, targetVector);
 
-            if(currDot > detAngle)
-            {
-                if(currDot > dotAngle)
-                {
-                    dotAngle = currDot;
-                    target = go;
-                }
-            }
+		    if(currDot > detAngle)
+		    {
+			if(currDot > dotAngle)
+			{
+			    dotAngle = currDot;
+			    target = go;
+			}
+		    }
         }
     }
 
