@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+
+// UI tool for counting FPS at runtime. Will not be included in final project files.
  
 public class FPScounter : MonoBehaviour
 {
