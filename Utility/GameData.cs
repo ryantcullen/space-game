@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Class for holding the main game data
+
 public class GameData : MonoBehaviour
 {
     public static GameObject player;
